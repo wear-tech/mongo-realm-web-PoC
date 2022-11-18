@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="shortcut icon" type="image/png" href="https://www.mongodb.com/assets/images/global/favicon.ico"/>
+  <script src="https://unpkg.com/realm-web@1.2.0/dist/bundle.iife.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <title>REALM POC</title>
+
+</head>
+
+<body>
+<h1>APP USER SUBSET - 20</h1>
+
+<div>
+  <input type="submit" value="LOGIN" onClick="login()">
+  <input type="submit" value="FIND 20 USER-EMAILS" onClick="find_users()">
+  <input type="submit" value="LOGOUT" onClick="logout()">
+</div>
+
+<div id="user"></div>
+
+<div id="user-emails"></div>
+
+<script src="data.js"></script>
+
+</body>
+</html>
