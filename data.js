@@ -11,14 +11,14 @@ const app = new Realm.App({id: 'test-eyyda'});
 //     console.error("Failed to log in", err);
 //   }
 // };
-
+let user;
 const login = async () => {
   let email = prompt("Please enter your email");
   let password = prompt("Please enter your password");
   const credentials = Realm.Credentials.emailPassword(email, password);
   // const credentials = Realm.Credentials.anonymous();
   try {
-    const user = await app.logIn(credentials);
+    user = await app.logIn(credentials);
     $('#user').empty().append("User ID: " + user.id);
     console.log(user);
   } catch (err) {
@@ -33,9 +33,32 @@ const logout = async () => {
   console.log(app.currentUser);
   let email_div = $("#user-emails");
   email_div.empty();
+  let realm_BE_firstname = $("#realm-BE-firstname");
+  realm_BE_firstname.empty();
   $('#user').empty();
   localStorage.clear();
 };
+
+const getUsersRealmFunction = async () => {
+  try {
+    const result = await user.functions.getUsers();
+    const get20 = result.slice(0,20);
+    console.log(get20);
+    let email_div = $("#user-emails");
+    let realm_BE_firstname = $("#realm-BE-firstname");
+    realm_BE_firstname.empty();
+    email_div.empty();
+    for (const user of get20) {
+      let p = document.createElement("p");
+      p.append(user.firstname);
+      realm_BE_firstname.append(p);
+    }
+  } catch (error) {
+    $("#user").append("Need to login first.");
+    console.error("Need to log in first", error);
+    return;
+  }
+}
 
 const find_users = async () => {
   let users;
@@ -58,8 +81,10 @@ const find_users = async () => {
     "limit": 20
   });
   // console.log(movies_titles);
+  let realm_BE_firstname = $("#realm-BE-firstname");
   let email_div = $("#user-emails");
   email_div.empty();
+  realm_BE_firstname.empty();
   for (const user of getUsers) {
     let p = document.createElement("p");
     p.append(user.email);
